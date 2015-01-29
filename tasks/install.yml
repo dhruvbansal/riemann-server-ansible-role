@@ -3,40 +3,8 @@
 - name: Ensure Riemann download directory exists
   file: path={{ riemann_download_dir }} state=directory owner=root group=root mode=0755
 
-- name: Download Riemann release
-  get_url: url={{ riemann_release_url }} dest="{{ riemann_download_dir }}/{{ riemann_basename }}"
-
-- name: Unarchive Riemann release
-  unarchive: src="{{ riemann_download_dir }}/{{ riemann_basename }}" dest="{{ riemann_root }}" creates="{{ riemann_root }}/riemann-{{ riemann_version }}" copy=no owner=root group=root
-
-- name: Link Riemann release
-  file: state=link path={{ riemann_home_dir }} src="{{ riemann_root }}/riemann-{{ riemann_version }}"
-
-- name: Create user group
-  group: name={{ riemann_group }} gid={{ riemann_gid }}
-  tags:
-    - groups
-
-- name: Create user
-  user: name={{ riemann_user }} uid={{ riemann_uid }} comment="Riemann" group={{ riemann_group }} shell=/bin/false home={{ riemann_user_dir }}
-  tags:
-    - users
-
-- name: Create configuration directory
-  file: path={{ riemann_conf_dir }}/conf.d state=directory recurse=yes owner=root group=root mode=0755
-
-- name: Create configuration file
-  template: src=riemann.config.j2 dest={{ riemann_conf_dir }}/riemann.config owner=root group=root mode=0644
-
-- name: Create log directory
-  file: path={{ riemann_log_dir }} state=directory owner={{ riemann_user }} group={{ riemann_group }} mode=0755
-    
-- name: Create upstart configuration file
-  template: src=upstart.conf.j2 dest=/etc/init/riemann.conf owner=root group=root mode=0644
-  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
-  notify:
-    - restart riemann
-
-- name: Start Riemann server
-  service: name=riemann state={{ riemann_state }} enabled={{ riemann_enable }}
+- include: install_from_tarball.yml
+  when: riemann_use_tarball
   
+- include: install_from_package.yml
+  when: riemann_use_package

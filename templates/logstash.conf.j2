@@ -3,8 +3,10 @@ input {
     path => "{{ riemann_log_dir }}/*.log"
     type => "riemann"
   }
+{% if riemann_use_tarball and ansible_os_family == "Debian" %}
   file {
     path => "/var/log/upstart/riemann.log"
     type => "riemann"
   }
+{% endif %}
 }

@@ -3,6 +3,7 @@
 - include: install.yml
   tags:
     - riemann-server
+    
 - include: logstash.yml
   when: riemann_use_logstash
   tags:

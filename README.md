@@ -11,7 +11,13 @@ You may also be interested in:
 
 ## Software
 
-Installs Riemann server.
+Installs Riemann server, either via `.deb` and `.rpm` packages
+(`riemann_use_package`, default true) or from a tarball
+(`riemann_use_tarball`).
+
+Writes a configuration file for Logstash to pick up Riemann's logs.  
+Set the `riemann_server_use_logstash` to `false` to disable this
+integration.
 
 ## Configuration & Logging
 
@@ -23,9 +29,11 @@ Creates the files:
 
 ## Services
 
-On Ubuntu/Debian it creates an Upstart script `/etc/init/riemann.conf`
-which defines a system service `riemann` listening on the standard
-ports.
+Creates the service `riemann`.
+
+FIXME: No service is set up when using RedHat and
+`riemann_use_tarball`...
+
 
 # Usage
 
@@ -36,6 +44,3 @@ Use the role in a playbook like this:
   roles:
     - riemann-server
 ```
-
-Set the `riemann_server_use_logstash` to `false` to skip the logstash
-configuration.

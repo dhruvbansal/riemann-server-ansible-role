@@ -1,9 +1,11 @@
 ---
 
+riemann_use_tarball: false
+riemann_use_package: true
+riemann_use_logstash: true
+
 riemann_download_dir: /usr/local/src
 riemann_version:      0.2.8
-riemann_basename:     "riemann-{{ riemann_version }}.tar.bz2"
-riemann_release_url:  "https://aphyr.com/riemann/{{ riemann_basename }}"
 
 riemann_user: riemann
 riemann_uid:   206
@@ -23,5 +25,3 @@ riemann_bind_address: 0.0.0.0
 riemann_tcp_port: 5555 # 5554 with TLS
 riemann_udp_port: 5555
 riemann_ws_port:  5556
-
-riemann_use_logstash: true
