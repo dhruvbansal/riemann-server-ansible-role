@@ -1,0 +1,19 @@
+description "riemann"
+
+exec 2>&1
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+respawn limit 10 5
+
+console log
+
+setuid {{ riemann_user  }}
+setgid {{ riemann_group }}
+
+script
+  cd {{ riemann_home_dir }}
+  exec ./bin/riemann /etc/riemann/riemann.config
+end script

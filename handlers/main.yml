@@ -1,0 +1,7 @@
+---
+
+- name: restart riemann
+  service: name=riemann state=restarted
+
+- name: restart logstash
+  service: name=logstash state=restarted

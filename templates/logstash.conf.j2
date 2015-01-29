@@ -1,0 +1,10 @@
+input {
+  file {
+    path => "{{ riemann_log_dir }}/*.log"
+    type => "riemann"
+  }
+  file {
+    path => "/var/log/upstart/riemann.log"
+    type => "riemann"
+  }
+}
