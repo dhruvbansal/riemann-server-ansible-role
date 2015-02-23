@@ -25,3 +25,5 @@ riemann_bind_address: 0.0.0.0
 riemann_tcp_port: 5555 # 5554 with TLS
 riemann_udp_port: 5555
 riemann_ws_port:  5556
+riemann_repl_port: 5557
+riemann_sse_port: 5558
