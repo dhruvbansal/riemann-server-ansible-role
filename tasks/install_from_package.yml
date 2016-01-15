@@ -1,26 +1,49 @@
 ---
-
 - name: Download Riemann release
   when: ansible_os_family == "Debian"
-  get_url: url="https://aphyr.com/riemann/riemann_{{ riemann_version }}_all.deb" dest="{{ riemann_download_dir }}/riemann_{{ riemann_version }}_all.deb"
+  get_url:
+    url: "https://aphyr.com/riemann/riemann_{{ riemann_version }}_all.deb"
+    dest: "{{ riemann_download_dir }}/riemann_{{ riemann_version }}_all.deb"
 
 - name: Install Riemann release
   when: ansible_os_family == "Debian"
-  apt: deb="{{ riemann_download_dir }}/riemann_{{ riemann_version }}_all.deb" state=installed
+  apt:
+    deb: "{{ riemann_download_dir }}/riemann_{{ riemann_version }}_all.deb"
+    state: installed
 
 - name: Download & install Riemann release
   when: ansible_os_family == "RedHat"
-  yum: name="https://aphyr.com/riemann/riemann-{{ riemann_version }}-1.noarch.rpm" state=present
+  yum:
+    name: "https://aphyr.com/riemann/riemann-{{ riemann_version }}-1.noarch.rpm"
+    state: present
 
 - name: Create configuration directory
-  file: path={{ riemann_conf_dir }}/conf.d state=directory recurse=yes owner=root group=root mode=0755
+  file:
+    path: "{{ riemann_conf_dir }}/conf.d"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+    mode: "0755"
 
 - name: Create configuration file
-  template: src=riemann.config.j2 dest={{ riemann_conf_dir }}/riemann.config owner=root group=root mode=0644
+  template:
+    src: riemann.config.j2
+    dest: "{{ riemann_conf_dir }}/riemann.config"
+    owner: root
+    group: root
+    mode: "0644"
 
 - name: Create log directory
-  file: path={{ riemann_log_dir }} state=directory owner={{ riemann_user }} group={{ riemann_group }} mode=0755
+  file:
+    path: "{{ riemann_log_dir }}"
+    state: directory
+    owner: "{{ riemann_user }}"
+    group: "{{ riemann_group }}"
+    mode: "0755"
 
 - name: Start Riemann server
-  service: name=riemann state={{ riemann_state }} enabled={{ riemann_enable }}
-  
+  service:
+    name: riemann
+    state: "{{ riemann_state }}"
+    enabled: "{{ riemann_enable }}"

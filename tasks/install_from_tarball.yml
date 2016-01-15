@@ -1,26 +1,49 @@
 ---
-
 - name: Download Riemann release
-  get_url: url="https://aphyr.com/riemann/riemann-{{ riemann_version }}.tar.bz2" dest="{{ riemann_download_dir }}/riemann-{{ riemann_basename }}.tar.bz2"
+  get_url:
+    url: "https://aphyr.com/riemann/riemann-{{ riemann_version }}.tar.bz2"
+    dest: "{{ riemann_download_dir }}/riemann-{{ riemann_basename }}.tar.bz2"
 
 - name: Unarchive Riemann release
-  unarchive: src="{{ riemann_download_dir }}/riemann-{{ riemann_version }}.tar.bz2" dest="{{ riemann_root }}" creates="{{ riemann_root }}/riemann-{{ riemann_version }}" copy=no owner=root group=root
+  unarchive:
+    src: "{{ riemann_download_dir }}/riemann-{{ riemann_version }}.tar.bz2"
+    dest: "{{ riemann_root }}"
+    creates: "{{ riemann_root }}/riemann-{{ riemann_version }}"
+    copy: no
+    owner: root
+    group: root
 
 - name: Link Riemann release
-  file: state=link path={{ riemann_home_dir }} src="{{ riemann_root }}/riemann-{{ riemann_version }}"
+  file:
+    state: link
+    path: "{{ riemann_home_dir }}"
+    src: "{{ riemann_root }}/riemann-{{ riemann_version }}"
 
 - name: Create user group
-  group: name={{ riemann_group }} gid={{ riemann_gid }}
+  group:
+    name: "{{ riemann_group }}"
+    gid: "{{ riemann_gid }}"
   tags:
     - groups
 
 - name: Create user
-  user: name={{ riemann_user }} uid={{ riemann_uid }} comment="Riemann" group={{ riemann_group }} shell=/bin/false home={{ riemann_user_dir }}
+  user:
+    name: "{{ riemann_user }}"
+    uid: "{{ riemann_uid }}"
+    comment: "Riemann"
+    group: "{{ riemann_group }}"
+    shell: /bin/false
+    home: "{{ riemann_user_dir }}"
   tags:
     - users
-    
+
 - name: Create upstart configuration file
-  template: src=upstart.conf.j2 dest=/etc/init/riemann.conf owner=root group=root mode=0644
+  template:
+    src: upstart.conf.j2
+    dest: /etc/init/riemann.conf
+    owner: root
+    group: root
+    mode: 0644
   when: ansible_os_family == "Debian"
   notify:
     - restart riemann
