@@ -2,7 +2,7 @@
 - name: Installing logstash configuration file
   template:
     src: logstash.conf.j2
-    dest: "{{ logstash_conf_dir }}/riemann.conf"
+    dest: "{{ riemann_logstash_conf_dir }}/riemann.conf"
     owner: root
     group: root
     mode: 0644
