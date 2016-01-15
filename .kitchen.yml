@@ -26,3 +26,5 @@ provisioner:
   # `ansible_push` does honor this option, though:
   chef_bootstrap_url: false
 
+verifier:
+  name: inspec
