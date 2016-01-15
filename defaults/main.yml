@@ -5,7 +5,7 @@ riemann_use_package: true
 riemann_use_logstash: true
 
 riemann_download_dir: /usr/local/src
-riemann_version:      0.2.8
+riemann_version:      0.2.10
 
 riemann_user: riemann
 riemann_uid:   206
