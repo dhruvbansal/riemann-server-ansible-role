@@ -2,10 +2,10 @@
 
 riemann_use_tarball: false
 riemann_use_package: true
-riemann_use_logstash: true
+riemann_use_logstash: false
 
 riemann_download_dir: /usr/local/src
-riemann_version:      0.2.8
+riemann_version:      0.2.10
 
 riemann_user: riemann
 riemann_uid:   206
@@ -27,3 +27,6 @@ riemann_udp_port: 5555
 riemann_ws_port:  5556
 riemann_repl_port: 5557
 riemann_sse_port: 5558
+
+# Only used if `riemann_use_logstash: true`.
+riemann_logstash_conf_dir: /etc/logstash/conf.d

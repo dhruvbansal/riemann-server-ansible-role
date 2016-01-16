@@ -1,0 +1,30 @@
+---
+driver:
+  name: vagrant
+
+platforms:
+  - name: ubuntu/trusty64
+    driver:
+      box: ubuntu/trusty64
+
+  - name: debian/jessie64
+    driver:
+      box: debian/jessie64
+
+suites:
+  - name: default
+
+provisioner:
+  name: ansible_push
+  playbook: test/integration/default/default.yml
+  verbose: vv
+  diff: yes
+  # The `ansible_playbook` provisioner supports these options,
+  # but `ansible_push` does not.
+  require_ruby_for_busser: false
+  require_chef_for_busser: false
+  # `ansible_push` does honor this option, though:
+  chef_bootstrap_url: false
+
+verifier:
+  name: inspec

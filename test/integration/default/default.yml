@@ -1,0 +1,6 @@
+---
+- name: Test installation of riemann server role.
+  hosts: all
+  become: yes
+  roles:
+    - ../../../../riemann-server-ansible-role

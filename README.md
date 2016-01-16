@@ -44,3 +44,12 @@ Use the role in a playbook like this:
   roles:
     - riemann-server
 ```
+
+# Running the tests
+
+Requires [test-kitchen](https://github.com/test-kitchen/test-kitchen).
+
+```
+bundle install
+bundle exec kitchen test
+```
