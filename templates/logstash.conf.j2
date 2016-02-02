@@ -3,9 +3,9 @@ input {
     path => "{{ riemann_log_dir }}/*.log"
     type => "riemann"
   }
-{% if riemann_use_tarball and ansible_os_family == "Debian" %}
+{% if riemann_use_nginx %}
   file {
-    path => "/var/log/upstart/riemann.log"
+    path => "{{ riemann_nginx_log_dir}}/*.log"
     type => "riemann"
   }
 {% endif %}

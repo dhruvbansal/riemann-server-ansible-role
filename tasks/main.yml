@@ -1,6 +1,48 @@
 ---
 
-- include: install.yml
+- name: Ensure Riemann download directory exists
+  file: path={{ riemann_download_dir }} state=directory owner=root group=root mode=0755
+  tags:
+    - riemann-server
+
+- name: Download Riemann release
+  when: ansible_os_family == "Debian"
+  get_url: url="https://aphyr.com/riemann/riemann_{{ riemann_version }}_all.deb" dest="{{ riemann_download_dir }}/riemann_{{ riemann_version }}.deb"
+  tags:
+    - riemann-server
+
+- name: Download Riemann release
+  when: ansible_os_family == "RedHat"
+  get_url: url="https://aphyr.com/riemann/riemann_{{ riemann_version }}-1.noarch.rpm" dest="{{ riemann_download_dir }}/riemann_{{ riemann_version }}.rpm"
+  tags:
+    - riemann-server
+
+- name: Install Riemann release
+  when: ansible_os_family == "Debian"
+  apt: deb="{{ riemann_download_dir }}/riemann_{{ riemann_version }}.deb" state=present
+  tags:
+    - riemann-server
+
+- name: Download & install Riemann release
+  when: ansible_os_family == "RedHat"
+  yum: name="{{ riemann_download_dir}}/riemann_{{ riemann_version }}.rpm" state=present
+  tags:
+    - riemann-server
+
+- name: Create configuration directory
+  file: path={{ riemann_conf_dir }}/conf.d state=directory recurse=yes owner=root group=root mode=0755
+  when: riemann_write_config
+  tags:
+    - riemann-server
+
+- name: Create configuration file
+  template: src=riemann.config.j2 dest={{ riemann_conf_dir }}/riemann.config owner=root group=root mode=0644
+  when: riemann_write_config
+  tags:
+    - riemann-server
+
+- name: Start Riemann server
+  service: name=riemann state={{ riemann_state }} enabled={{ riemann_enable }}
   tags:
     - riemann-server
     
@@ -9,3 +51,9 @@
   tags:
     - riemann-server
     - logstash
+
+- include: nginx.yml
+  when: riemann_use_nginx
+  tags:
+    - riemann-server
+    - nginx

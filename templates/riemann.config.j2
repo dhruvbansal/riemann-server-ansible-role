@@ -1,14 +1,18 @@
 ; -*- mode: clojure; -*-
 ; vim: filetype=clojure
+; {{ ansible_managed }}
 
 (logging/init {:file "{{ riemann_log_dir }}/riemann.log"})
 
 ; Listen on the local interface over TCP (5555), UDP (5555), and websockets
 ; (5556)
 (let [host "{{ riemann_bind_address }}"]
-  (tcp-server {:host host :port {{ riemann_tcp_port }}})
-  (udp-server {:host host :port {{ riemann_udp_port }}})
-  (ws-server  {:host host :port {{ riemann_ws_port }}}))
+  {% if riemann_use_tcp %}(tcp-server {:host host :port {%if riemann_use_tls%}{{ riemann_tls_port }} :tls? true
+                                       :key     "{{ riemann_tls_key }}"
+                                       :cert    "{{ riemann_tls_cert }}"
+                                       :ca-cert "{{ riemann_tls_ca_cert }}"{% else %}{{ riemann_tcp_port }}}{% endif %}){% endif %}
+  {% if riemann_use_udp %}(udp-server {:host host :port {{ riemann_tcp_port }}}){% endif %}
+  {% if riemann_use_ws %}(ws-server  {:host host :port {{ riemann_ws_port }}}){% endif %})
 
 ; Expire old events from the index every 5 seconds.
 (periodically-expire 5)

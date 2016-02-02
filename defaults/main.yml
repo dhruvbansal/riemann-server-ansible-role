@@ -1,29 +1,70 @@
 ---
 
-riemann_use_tarball: false
-riemann_use_package: true
-riemann_use_logstash: true
+#
+# Installation
+#
+riemann_version:      0.2.10
+riemann_state:        started
+riemann_enable:       yes
 
+#
+# Directories
+#
+
+riemann_log_dir:      /var/log/riemann
+riemann_conf_dir:     /etc/riemann
 riemann_download_dir: /usr/local/src
-riemann_version:      0.2.8
 
-riemann_user: riemann
-riemann_uid:   206
+
+#
+# User & Group
+#
+riemann_user:  riemann
 riemann_group: riemann
-riemann_gid:   206
-riemann_user_dir: /var/run/riemann  
 
-riemann_root:     /usr/local
-riemann_home_dir: /usr/local/riemann
-riemann_conf_dir: /etc/riemann
-riemann_log_dir:  /var/log/riemann
-
-riemann_state:  started
-riemann_enable: yes
+#
+# Servers, Addresses, & Ports
+#
 
 riemann_bind_address: 0.0.0.0
-riemann_tcp_port: 5555 # 5554 with TLS
-riemann_udp_port: 5555
+riemann_tls_port: 5554          # used if riemann_use_tls is set below
+riemann_tcp_port: 5555
 riemann_ws_port:  5556
 riemann_repl_port: 5557
 riemann_sse_port: 5558
+
+riemann_use_tcp: true
+riemann_use_udp: true
+riemann_use_ws:  true
+
+#
+# Config
+#
+riemann_write_config: true
+
+#
+# TLS
+#
+riemann_use_tls: false # set below variables if you set this to true
+riemann_tls_key: ~
+riemann_tls_cert: ~
+riemann_tls_ca_cert: ~
+
+#
+# Logstash
+#
+riemann_use_logstash: true
+logstash_conf_dir: "/etc/logstash/conf.d"
+
+#
+# nginx
+#
+riemann_use_nginx: true
+riemann_nginx_log_dir: "{{ riemann_log_dir }}/nginx"
+riemann_nginx_user: www-data
+riemann_nginx_group: www-data
+riemann_nginx_proxy_params: /etc/nginx/proxy_params
+riemann_nginx_ssl_params: /etc/nginx/ssl.conf
+riemann_nginx_firewall_params: /etc/nginx/firewall.conf
+riemann_fqdn:    riemann.example.com
+riemann_ws_fqdn: riemann-ws.exampe.com
