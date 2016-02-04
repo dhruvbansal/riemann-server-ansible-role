@@ -51,12 +51,6 @@ riemann_tls_cert: ~
 riemann_tls_ca_cert: ~
 
 #
-# Logstash
-#
-riemann_use_logstash: true
-logstash_conf_dir: "/etc/logstash/conf.d"
-
-#
 # nginx
 #
 riemann_use_nginx: true

@@ -46,12 +46,6 @@
   tags:
     - riemann-server
     
-- include: logstash.yml
-  when: riemann_use_logstash
-  tags:
-    - riemann-server
-    - logstash
-
 - include: nginx.yml
   when: riemann_use_nginx
   tags:
