@@ -15,9 +15,6 @@ Installs Riemann server, either via `.deb` and `.rpm` packages
 (`riemann_use_package`, default true) or from a tarball
 (`riemann_use_tarball`).
 
-Writes a configuration file for Logstash to pick up Riemann's logs.  
-Set the `riemann_server_use_logstash` to `false` to disable this
-integration.
 
 ## Configuration & Logging
 
@@ -25,7 +22,6 @@ Creates the files:
 
 * `/etc/riemann/riemann.config` -- configuration file for Riemann
 * `/var/log/riemann` -- log directory for Riemann
-* `/etc/logstash/conf.d/riemann.conf` -- configuration file for Logstash
 
 ## Services
 
