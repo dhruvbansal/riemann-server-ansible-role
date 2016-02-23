@@ -2,6 +2,3 @@
 
 - name: restart riemann
   service: name=riemann state=restarted
-
-- name: restart nginx
-  service: name=nginx state=restarted

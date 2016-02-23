@@ -45,9 +45,3 @@
   service: name=riemann state={{ riemann_state }} enabled={{ riemann_enable }}
   tags:
     - riemann-server
-    
-- include: nginx.yml
-  when: riemann_use_nginx
-  tags:
-    - riemann-server
-    - nginx
