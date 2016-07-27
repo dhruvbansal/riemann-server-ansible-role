@@ -3,7 +3,7 @@
 #
 # Installation
 #
-riemann_version:      0.2.10
+riemann_version:      0.2.11
 riemann_state:        started
 riemann_enable:       yes
 

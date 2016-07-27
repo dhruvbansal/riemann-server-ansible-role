@@ -13,7 +13,7 @@
 
 - name: Download Riemann release
   when: ansible_os_family == "RedHat"
-  get_url: url="https://aphyr.com/riemann/riemann_{{ riemann_version }}-1.noarch.rpm" dest="{{ riemann_download_dir }}/riemann_{{ riemann_version }}.rpm"
+  get_url: url="https://aphyr.com/riemann/riemann-{{ riemann_version }}-1.noarch.rpm" dest="{{ riemann_download_dir }}/riemann_{{ riemann_version }}.rpm"
   tags:
     - riemann-server
 
